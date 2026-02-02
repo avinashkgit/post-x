@@ -1,16 +1,13 @@
 import os
+import logging
 from agents.generate_post_agent import GeneratePostAgent
 from agents.x_poster_agent import XPosterAgent
 
+logging.basicConfig(level=logging.INFO)
+
 # Create agents
 gen_agent = GeneratePostAgent(os.environ['GEMINI_API_KEY'])
-poster = XPosterAgent(
-    os.environ['TWITTER_BEARER_TOKEN'],
-    os.environ['TWITTER_CONSUMER_KEY'],
-    os.environ['TWITTER_CONSUMER_SECRET'],
-    os.environ['TWITTER_ACCESS_TOKEN'],
-    os.environ['TWITTER_ACCESS_TOKEN_SECRET']
-)
+poster = XPosterAgent()
 
 # Generate and post
 post = gen_agent.generate_post()

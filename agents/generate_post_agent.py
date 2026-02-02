@@ -1,6 +1,7 @@
 import random
 import google.generativeai as genai
 
+
 class Agent:
     def __init__(self, model):
         self.model = model
@@ -8,11 +9,13 @@ class Agent:
     def generate_post(self):
         raise NotImplementedError
 
+
 class NewsAgent(Agent):
     def generate_post(self):
         prompt = "Generate a clickbait engaging social media post about recent news events. Make it short, under 280 characters, and attention-grabbing."
         response = self.model.generate_content(prompt)
         return response.text.strip()
+
 
 class MemeAgent(Agent):
     def generate_post(self):
@@ -20,11 +23,13 @@ class MemeAgent(Agent):
         response = self.model.generate_content(prompt)
         return response.text.strip()
 
+
 class QuoteAgent(Agent):
     def generate_post(self):
         prompt = "Generate an inspirational quote or motivational post. Make it engaging and under 280 characters."
         response = self.model.generate_content(prompt)
         return response.text.strip()
+
 
 class TechAgent(Agent):
     def generate_post(self):
@@ -32,11 +37,13 @@ class TechAgent(Agent):
         response = self.model.generate_content(prompt)
         return response.text.strip()
 
+
 class LifestyleAgent(Agent):
     def generate_post(self):
         prompt = "Generate an engaging social media post about lifestyle topics like health, fitness, relationships, or self-care. Make it clickbait, under 280 characters, and encourage engagement with questions or calls to action. Include emojis and hashtags."
         response = self.model.generate_content(prompt)
         return response.text.strip()
+
 
 class EntertainmentAgent(Agent):
     def generate_post(self):
@@ -44,11 +51,13 @@ class EntertainmentAgent(Agent):
         response = self.model.generate_content(prompt)
         return response.text.strip()
 
+
 class FoodAgent(Agent):
     def generate_post(self):
         prompt = "Generate a mouth-watering post about food, recipes, cooking tips, or dining experiences. Make it visually appealing in text form, under 280 characters, and ask followers to share their favorites. Include food emojis."
         response = self.model.generate_content(prompt)
         return response.text.strip()
+
 
 class SportsAgent(Agent):
     def generate_post(self):
@@ -56,11 +65,13 @@ class SportsAgent(Agent):
         response = self.model.generate_content(prompt)
         return response.text.strip()
 
+
 class OpinionAgent(Agent):
     def generate_post(self):
         prompt = "Generate a controversial opinion or hot take on current trends, politics, or culture. Make it provocative but not offensive, under 280 characters, designed to start debates. Encourage replies."
         response = self.model.generate_content(prompt)
         return response.text.strip()
+
 
 class QuestionAgent(Agent):
     def generate_post(self):
@@ -68,16 +79,18 @@ class QuestionAgent(Agent):
         response = self.model.generate_content(prompt)
         return response.text.strip()
 
+
 class ListAgent(Agent):
     def generate_post(self):
         prompt = "Create a 'Top 5' or list-style post about interesting facts, tips, or rankings. Make it shareable and curiosity-piquing, under 280 characters. Use numbers and emojis."
         response = self.model.generate_content(prompt)
         return response.text.strip()
 
+
 class GeneratePostAgent:
     def __init__(self, api_key):
         genai.configure(api_key=api_key)
-        self.model = genai.GenerativeModel('gemini-1.5-flash')
+        self.model = genai.GenerativeModel("gemini-2.0-flash")
         self.agents = [
             NewsAgent(self.model),
             MemeAgent(self.model),
@@ -89,7 +102,7 @@ class GeneratePostAgent:
             SportsAgent(self.model),
             OpinionAgent(self.model),
             QuestionAgent(self.model),
-            ListAgent(self.model)
+            ListAgent(self.model),
         ]
 
     def generate_post(self):

@@ -10,16 +10,15 @@ This Python application uses AI agents to generate various types of highly engag
 
    - **Gemini API Key:** Get from [Google AI Studio](https://makersuite.google.com/app/apikey)
    - **X (Twitter) API Keys:** Get from [Twitter Developer Portal](https://developer.twitter.com/)
-     - You need: Bearer Token, Consumer Key, Consumer Secret, Access Token, Access Token Secret
+     - You need: API Key, API Secret, Access Token, Access Token Secret
      - Ensure your app has write permissions.
 
 3. **GitHub Secrets:** In your GitHub repository settings, add the following secrets:
    - `GEMINI_API_KEY`
-   - `TWITTER_BEARER_TOKEN`
-   - `TWITTER_CONSUMER_KEY`
-   - `TWITTER_CONSUMER_SECRET`
-   - `TWITTER_ACCESS_TOKEN`
-   - `TWITTER_ACCESS_TOKEN_SECRET`
+   - `X_API_KEY`
+   - `X_API_SECRET`
+   - `X_ACCESS_TOKEN`
+   - `X_ACCESS_TOKEN_SECRET`
 
 4. **Push to GitHub:** The workflow will run automatically every 2 hours, or you can trigger it manually.
 
@@ -27,8 +26,8 @@ This Python application uses AI agents to generate various types of highly engag
 
 To test locally:
 
-1. Install dependencies: `pip install -r requirements.txt`
-2. Set environment variables with your API keys.
+1. Copy `.env.example` to `.env` and fill in your API keys.
+2. Install dependencies: `pip install -r requirements.txt`
 3. Run: `python main.py`
 
 ## Notes
