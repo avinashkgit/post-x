@@ -6,8 +6,7 @@ This Python application uses AI agents to generate various types of highly engag
 - `main.py` - Entry point that initializes agents and posts
 - `agents/` - Modular agent system
   - `base_agent.py` - Abstract base Agent class
-  - `unified_agent.py` - Single agent that generates all content types (news, memes, quotes, tech, lifestyle, entertainment, food, sports, opinions, questions, lists)
-  - `generate_post_agent.py` - Main agent manager
+  - `generate_post_agent.py` - Unified content generation agent with 11 content types
 - `x_poster_agent.py` - X (Twitter) posting client with media support
 - `requirements.txt` - Dependencies
 - `.github/workflows/post.yml` - GitHub Actions workflow
