@@ -9,7 +9,7 @@ print("🚀 Starting X Post Bot...")
 
 # Create agents
 print("🤖 Initializing unified AI content generator...")
-gen_agent = GeneratePostAgent(os.environ['GEMINI_API_KEY'])
+gen_agent = GeneratePostAgent(os.environ["GEMINI_API_KEY"], debug=True)
 
 print("🐦 Initializing X poster...")
 poster = XPosterAgent()

@@ -4,131 +4,180 @@ from .base_agent import Agent
 
 
 class GeneratePostAgent(Agent):
-    def __init__(self, api_key: str):
+    def __init__(self, api_key: str, debug: bool = False):
         self.client = genai.Client(api_key=api_key)
         super().__init__(self.client)
 
-        # ---- Pattern-interrupt hooks (mixed energy) ----
+        self.debug = debug  # toggle prints on/off
+
+        # ---- Pattern-interrupt hooks ----
         self.hooks = [
-            "i know this is going to annoy some people, but",
             "this might sound random, but",
-            "tell me i’m wrong, but",
-            "i wasn’t even thinking about this until",
+            "tell me if i’m missing something, but",
+            "i just realized something kind of wild about",
             "maybe this is obvious, but",
-            "i just realized something kind of funny about",
-            "not sure who needs to hear this, but",
+            "i wasn’t even thinking about this until",
             "lowkey can’t stop thinking about how",
+            "i know this sounds dumb, but",
+            "not sure why this clicked just now, but",
         ]
 
-        # ---- Personas (Twitter-native voices) ----
+        # ---- Personas ----
         self.personas = [
-            "a burnt-out creative who types in lowercase",
-            "a casual observer tweeting like it’s a group chat",
             "a curious overthinker",
-            "someone scrolling and posting without much filter",
+            "someone tweeting like it’s a group chat",
+            "a slightly nerdy observer",
+            "a casual scroller posting without much filter",
+            "a thoughtful person with a sense of humor",
         ]
 
-        # ---- Reality anchors (light context) ----
+        # ---- Topic domains ----
+        self.domains = {
+            "science": {
+                "angle": [
+                    "how strange reality actually is",
+                    "how little we really understand",
+                    "how counterintuitive this feels",
+                ],
+                "meaning": [
+                    "because it makes everyday life feel less boring",
+                    "because it messes with my sense of reality",
+                    "because this never stops being weird to me",
+                ],
+            },
+            "tech": {
+                "angle": [
+                    "how fast things change",
+                    "how normalized this already feels",
+                    "how nobody really questions this anymore",
+                ],
+                "meaning": [
+                    "because i remember when this felt futuristic",
+                    "because we adapted way too fast",
+                    "because this is probably changing us quietly",
+                ],
+            },
+            "philosophy": {
+                "angle": [
+                    "what this says about people",
+                    "how much of life is just interpretation",
+                    "how weird meaning actually is",
+                ],
+                "meaning": [
+                    "because it changes how i look at small things",
+                    "because i catch myself thinking about this a lot",
+                    "because it sneaks up on you",
+                ],
+            },
+            "jokes": {
+                "angle": [
+                    "how ridiculous this is when you zoom out",
+                    "how this feels like a bit but isn’t",
+                    "how this sounds fake but isn’t",
+                ],
+                "meaning": [
+                    "because once you notice it, it’s everywhere",
+                    "because this is unintentionally hilarious",
+                ],
+            },
+            "culture": {
+                "angle": [
+                    "how quickly we move on",
+                    "how performative this feels",
+                    "how everyone pretends this is normal",
+                ],
+                "meaning": [
+                    "because it says more than we admit",
+                    "because this didn’t used to feel like this",
+                ],
+            },
+            "random": {
+                "angle": [
+                    "how my brain made this connection",
+                    "why this popped into my head",
+                    "how this makes no sense but still feels true",
+                ],
+                "meaning": [
+                    "because my brain does this sometimes",
+                    "because this felt worth saying out loud",
+                ],
+            },
+        }
+
+        # ---- Context anchors ----
         self.anchors = [
-            "the way the feed looks today",
-            "a reply i just read",
-            "that update everyone’s talking about",
-            "scrolling way too long",
-            "something i noticed earlier",
-            "reading comments instead of the post",
+            "scrolling the feed",
+            "reading a comment",
+            "something i saw earlier",
+            "a random notification",
+            "a conversation i overheard",
+            "staring at my screen for too long",
         ]
 
-        # ---- Post modes (THIS is the big unlock) ----
+        # ---- Post modes ----
         self.post_modes = {
-            "hot_take": {
-                "tone": "confident but not aggressive",
-                "ending": "invite disagreement or correction",
-                "meaning": [
-                    "because i think we overthink this stuff",
-                    "because nobody ever says this part out loud",
-                    "because it feels obvious once you notice it",
-                ],
-            },
-            "observational_funny": {
-                "tone": "light, amused, slightly sarcastic",
-                "ending": "let the joke land without explaining it",
-                "meaning": [
-                    "because this keeps happening everywhere",
-                    "because once you see it, you can’t unsee it",
-                ],
-            },
-            "curious": {
-                "tone": "genuinely curious, not judgmental",
-                "ending": "end with a soft question or wondering",
-                "meaning": [
-                    "because i’m actually curious how people see this",
-                    "because i feel like i’m missing something",
-                ],
-            },
-            "realization": {
-                "tone": "calm, slightly impressed",
-                "ending": "trail off or let it sit",
-                "meaning": [
-                    "because it kind of explains a lot",
-                    "because this suddenly made things click",
-                ],
-            },
-            "chaotic": {
-                "tone": "slightly unhinged but playful",
-                "ending": "abrupt or absurd",
-                "meaning": [
-                    "because nothing about this makes sense anyway",
-                    "because at this point, why not",
-                ],
-            },
-            "appreciative": {
-                "tone": "calm, genuine, grounded",
-                "ending": "simple statement or soft thought",
-                "meaning": [
-                    "because some things are actually just good",
-                    "because this made my day a little better",
-                ],
-            },
+            "observational": "light, curious, slightly amused",
+            "hot_take": "confident but not aggressive",
+            "curious": "genuinely wondering",
+            "playful": "slightly absurd or ironic",
+            "reflective": "calm, thoughtful, not deep on purpose",
         }
 
     def _get_system_instruction(self) -> str:
         return (
             "You are a real Twitter/X user.\n"
-            "You are not sad by default.\n"
-            "You post for many reasons: humor, curiosity, confidence, chaos, appreciation.\n\n"
+            "You post about many things: science, tech, jokes, philosophy, culture, random thoughts.\n"
+            "You are not trying to educate or impress.\n\n"
             "RULES:\n"
             "- NO emojis. NO hashtags.\n"
-            "- Do not explain context.\n"
+            "- Do NOT explain concepts.\n"
             "- Avoid formal structure or conclusions.\n"
-            "- Sound like you posted this without rereading.\n"
+            "- Use casual language and uneven spacing.\n"
             "- Avoid AI words (delve, testament, journey, tapestry, resonate).\n"
-            "- If lowercase style is implied, do not capitalize."
+            "- This should feel like a thought, not a post."
         )
 
     def generate_post(self) -> str:
         persona = random.choice(self.personas)
         hook = random.choice(self.hooks)
         anchor = random.choice(self.anchors)
+
+        domain_key = random.choice(list(self.domains.keys()))
+        domain = self.domains[domain_key]
+        angle = random.choice(domain["angle"])
+        meaning = random.choice(domain["meaning"])
+
         mode_key = random.choice(list(self.post_modes.keys()))
-        mode = self.post_modes[mode_key]
-        meaning = random.choice(mode["meaning"])
+        mode_tone = self.post_modes[mode_key]
+
+        # ---- DEBUG PRINT (random choices) ----
+        if self.debug:
+            print("\n--- POST DEBUG ---")
+            print(f"Persona     : {persona}")
+            print(f"Hook        : {hook}")
+            print(f"Domain      : {domain_key}")
+            print(f"Angle       : {angle}")
+            print(f"Meaning     : {meaning}")
+            print(f"Mode        : {mode_key}")
+            print(f"Tone        : {mode_tone}")
+            print(f"Anchor      : {anchor}")
+            print("------------------\n")
 
         prompt = (
             f"Write a Twitter/X post as {persona}.\n\n"
             f"Start with this hook:\n'{hook}'\n\n"
             f"Lightly reference this somewhere:\n'{anchor}'\n\n"
-            f"POST MODE: {mode_key}\n"
-            f"TONE: {mode['tone']}\n"
-            f"ENDING STYLE: {mode['ending']}\n\n"
+            f"TOPIC DOMAIN: {domain_key}\n"
+            f"ANGLE: {angle}\n"
+            f"TONE: {mode_tone}\n\n"
             "Somewhere include one short line explaining why this matters to you, "
             f"like: '{meaning}'.\n\n"
             "Guidelines:\n"
-            "- This can be funny, curious, confident, chaotic, or calm.\n"
-            "- Do NOT default to sadness or frustration.\n"
+            "- This can be funny, curious, playful, insightful, or random.\n"
+            "- Do NOT explain or teach.\n"
+            "- Let the thought wander slightly.\n"
             "- Use uneven line breaks.\n"
-            "- It’s okay to contradict yourself lightly.\n"
-            "- Do not summarize or teach.\n"
-            "- End naturally based on the mode, not always with a question."
+            "- End naturally."
         )
 
         response = self.client.models.generate_content(
@@ -146,11 +195,9 @@ class GeneratePostAgent(Agent):
     def _clean_and_format(self, text: str) -> str:
         text = text.replace("**", "").replace('"', "").strip()
 
-        # occasional lowercase aesthetic
         if random.random() < 0.25:
             text = text.lower()
 
-        # remove overly neat endings
         if random.random() < 0.2:
             text = text.rstrip(".!?")
 
