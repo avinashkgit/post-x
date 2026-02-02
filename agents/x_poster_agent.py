@@ -4,6 +4,7 @@ import requests
 import tweepy
 import logging
 from dotenv import load_dotenv
+from typing import Optional
 
 logger = logging.getLogger(__name__)
 load_dotenv()
@@ -94,7 +95,7 @@ class XPosterAgent:
     # ────────────────────────────────────────────────
     # Posting methods
     # ────────────────────────────────────────────────
-    def post(self, text: str) -> str | None:
+    def post(self, text: str) -> Optional[str]:
         """Post simple text tweet"""
         try:
             response = self.client.create_tweet(text=text)
@@ -110,7 +111,7 @@ class XPosterAgent:
             logger.exception("❌ Failed to post")
             return None
 
-    def post_article(self, title: str, slug: str) -> str | None:
+    def post_article(self, title: str, slug: str) -> Optional[str]:
         """Post article link without image"""
         try:
             url = f"https://hotonnet.com/article/{slug}"
@@ -129,7 +130,7 @@ class XPosterAgent:
             logger.exception("❌ Failed to post article")
             return None
 
-    def post_article_with_image(self, title: str, slug: str, img_path: str) -> str | None:
+    def post_article_with_image(self, title: str, slug: str, img_path: str) -> Optional[str]:
         """Upload local image + create tweet"""
         try:
             url = f"https://hotonnet.com/article/{slug}"
@@ -153,7 +154,7 @@ class XPosterAgent:
             logger.exception("❌ Failed to post article with image")
             return None
 
-    def post_article_with_image_url(self, title: str, slug: str, image_url: str) -> str | None:
+    def post_article_with_image_url(self, title: str, slug: str, image_url: str) -> Optional[str]:
         """
         Download remote image → upload to X → post → clean up temp file
         """

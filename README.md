@@ -2,6 +2,16 @@
 
 This Python application uses AI agents to generate various types of highly engaging posts (news, memes, quotes, tech, lifestyle, entertainment, food, sports, opinions, questions, lists) using Google's Gemini AI and posts them on X (formerly Twitter) every 2 hours using GitHub Actions.
 
+## Project Structure
+- `main.py` - Entry point that initializes agents and posts
+- `agents/` - Modular agent system
+  - `base_agent.py` - Base Agent class
+  - `generate_post_agent.py` - Main agent manager with 11 specialized content agents
+  - Individual agent files for each content type (news, memes, quotes, etc.)
+- `x_poster_agent.py` - X (Twitter) posting client with media support
+- `requirements.txt` - Dependencies
+- `.github/workflows/post.yml` - GitHub Actions workflow
+
 ## Setup
 
 1. **Clone or download this repository.**
