@@ -8,7 +8,7 @@ logging.basicConfig(level=logging.INFO)
 print("🚀 Starting X Post Bot...")
 
 # Create agents
-print("🤖 Initializing AI content generator...")
+print("🤖 Initializing unified AI content generator...")
 gen_agent = GeneratePostAgent(os.environ['GEMINI_API_KEY'])
 
 print("🐦 Initializing X poster...")

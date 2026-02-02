@@ -5,9 +5,9 @@ This Python application uses AI agents to generate various types of highly engag
 ## Project Structure
 - `main.py` - Entry point that initializes agents and posts
 - `agents/` - Modular agent system
-  - `base_agent.py` - Base Agent class
-  - `generate_post_agent.py` - Main agent manager with 11 specialized content agents
-  - Individual agent files for each content type (news, memes, quotes, etc.)
+  - `base_agent.py` - Abstract base Agent class
+  - `unified_agent.py` - Single agent that generates all content types (news, memes, quotes, tech, lifestyle, entertainment, food, sports, opinions, questions, lists)
+  - `generate_post_agent.py` - Main agent manager
 - `x_poster_agent.py` - X (Twitter) posting client with media support
 - `requirements.txt` - Dependencies
 - `.github/workflows/post.yml` - GitHub Actions workflow
@@ -43,4 +43,4 @@ To test locally:
 ## Notes
 
 - Posts are generated to be under 280 characters.
-- The bot randomly selects from different agent types: News (current events), Memes (funny content), Quotes (inspirational), Tech (technology trends), Lifestyle (health/fitness), Entertainment (movies/TV), Food (recipes/tips), Sports (news/predictions), Opinions (controversial takes), Questions (discussion starters), and Lists (top rankings).
+- The bot randomly selects from different content types: News (current events), Memes (funny content), Quotes (inspirational), Tech (technology trends), Lifestyle (health/fitness), Entertainment (movies/TV), Food (recipes/tips), Sports (news/predictions), Opinions (controversial takes), Questions (discussion starters), and Lists (top rankings).
