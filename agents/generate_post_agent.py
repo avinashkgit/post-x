@@ -4,93 +4,166 @@ from .base_agent import Agent
 
 
 class GeneratePostAgent(Agent):
-    def __init__(self, api_key):
+    def __init__(self, api_key: str):
         self.client = genai.Client(api_key=api_key)
         super().__init__(self.client)
-        self.prompts = [
-            # News
+
+        # ---- Persona (who is speaking) ----
+        self.personas = [
+            "an office worker scrolling late at night",
+            "a tired but thoughtful professional",
+            "someone slightly burnt out but observant",
+            "a curious person who overthinks things",
+            "someone casually sharing a thought with friends",
+            "a tech-aware but non-expert person",
+            "a fan reacting emotionally, not logically",
+        ]
+
+        # ---- Emotional state (how it feels) ----
+        self.emotions = [
+            "a bit tired",
+            "slightly annoyed",
+            "quietly hopeful",
+            "confused but curious",
+            "mildly frustrated",
+            "thoughtful and calm",
+            "unsure how to feel",
+        ]
+
+        # ---- Intent styles (how the post behaves) ----
+        self.intents = [
+            "reacting in the moment",
+            "thinking out loud",
+            "sharing a small realization",
+            "venting without blaming",
+            "reflecting without teaching",
+            "wondering rather than concluding",
+        ]
+
+        # ---- Length bands ----
+        self.length_modes = {
+            "short": "Keep it brief and natural. One or two short paragraphs at most.",
+            "medium": "Let it breathe. A few short paragraphs with pauses.",
+            "long": "Write a longer post with multiple short paragraphs. It can ramble slightly."
+        }
+
+        # ---- Core topic prompts ----
+        self.topics = [
+            # News / current events
             (
-                "Write a post like a real person reacting to a surprising or unsettling news moment. "
-                "Sound curious, concerned, or slightly shocked — not like a headline. "
-                "Keep it casual, under 280 characters. End with a natural question. "
-                "No hashtags, emojis, or formal news tone."
+                "React to a news or current event without summarizing it. "
+                "Avoid facts or headlines. Focus only on how it makes you feel or think."
             ),
-            # Memes
+
+            # Humor / memes
             (
-                "Write something funny and relatable that feels like a random thought someone posted. "
-                "Dry humor, self-awareness, or mild sarcasm is good. "
-                "Short, imperfect, under 280 characters. "
-                "No hashtags, emojis, or explaining the joke."
+                "Share a funny or relatable thought based on everyday life. "
+                "Dry humor, irony, or quiet sarcasm works best."
             ),
-            # Quotes
+
+            # Reflection / life
             (
-                "Write a short thought about life or growth that sounds like something someone realized late at night. "
-                "Not poetic. Not inspirational. Just honest. "
-                "Under 280 characters. No hashtags or emojis."
+                "Share a personal thought about life, growth, routine, or change. "
+                "Not advice. Just experience."
             ),
-            # Tech
+
+            # Tech / AI
             (
-                "Write a casual thought about tech, AI, or gadgets like someone thinking out loud. "
-                "Curious, slightly unsure, maybe impressed or skeptical. "
-                "Under 280 characters. End with a natural question. "
-                "No buzzwords, hashtags, or emojis."
+                "Share a casual thought about technology, AI, or digital life. "
+                "Curious or skeptical, but never expert-like."
             ),
-            # Lifestyle
+
+            # Lifestyle / mental state
             (
-                "Write a relatable post about habits, health, relationships, or mental state. "
-                "Sound human, a bit vulnerable or self-aware. "
-                "Under 280 characters. End with a question that feels genuine. "
-                "No hashtags or emojis."
+                "Write about habits, burnout, relationships, mental state, or routine. "
+                "Make it feel like a confession or late-night realization."
             ),
-            # Entertainment
+
+            # Entertainment / pop culture
             (
-                "Write a casual opinion about a movie, show, celebrity, or pop culture moment. "
-                "It should sound like a real take, not a review. "
-                "Under 280 characters. End with a question. "
-                "No hashtags or emojis."
+                "Share a personal take on a movie, show, celebrity, or pop culture moment. "
+                "Sound like you’re talking to friends, not reviewing."
             ),
+
             # Food
             (
-                "Write about food like someone who’s either craving it or slightly disappointed by it. "
-                "Casual, sensory, imperfect. "
-                "Under 280 characters. End with a natural question. "
-                "No hashtags or emojis."
+                "Write about food tied to mood, memory, craving, or disappointment. "
+                "No recipes. Just feeling."
             ),
+
             # Sports
             (
-                "Write a sports take that sounds emotional or impulsive. "
-                "A little bias is fine. Overconfidence is fine. "
-                "Under 280 characters. End with a question that invites debate. "
-                "No hashtags or emojis."
+                "Write a sports-related post driven by emotion or instinct. "
+                "Bias and overconfidence are allowed."
             ),
+
             # Opinions
             (
-                "Write an opinion that sounds like a thought someone hesitated before posting. "
-                "Respectful, but honest. Not trying to go viral. "
-                "Under 280 characters. End with a question. "
-                "No hashtags or emojis."
+                "Share an opinion that feels slightly risky to post. "
+                "Respectful, honest, and uncertain."
             ),
-            # Questions
+
+            # Open question
             (
-                "Ask a question that feels personal and real, not philosophical or motivational. "
-                "Something people might actually answer. "
-                "Under 280 characters. No hashtags or emojis."
+                "Build toward a question people would realistically reply to. "
+                "You can include brief personal context."
             ),
+
             # Lists
             (
-                "Write a short list like someone casually sharing thoughts, not teaching. "
-                "Loose structure is fine. Slightly messy is good. "
-                "Under 280 characters. End with a question. "
-                "No hashtags or emojis."
+                "Write a loose, casual list of thoughts or observations. "
+                "Messy structure is fine."
             ),
         ]
 
-    def generate_post(self):
-        prompt = random.choice(self.prompts)
-        response = self.client.models.generate_content(
-            model="gemini-2.0-flash", contents=prompt
+    def _build_prompt(self) -> str:
+        persona = random.choice(self.personas)
+        emotion = random.choice(self.emotions)
+        intent = random.choice(self.intents)
+        length_key = random.choice(list(self.length_modes.keys()))
+        length_rule = self.length_modes[length_key]
+        topic = random.choice(self.topics)
+
+        return (
+            f"Write a social media post as {persona}. "
+            f"The tone should feel {emotion}. "
+            f"You are {intent}. "
+            f"{topic} "
+            f"{length_rule} "
+            "Use natural language, contractions, and occasional sentence fragments. "
+            "It’s okay if it’s imperfect or slightly rambling. "
+            "Avoid sounding confident, authoritative, or polished. "
+            "Do not teach, summarize, or conclude. "
+            "End with a genuine question if it feels natural. "
+            "No hashtags, no emojis."
         )
+
+    def _cleanup(self, text: str) -> str:
+        # Remove classic AI polish phrases
+        kill_phrases = [
+            "In conclusion",
+            "Overall",
+            "Ultimately",
+            "This shows that",
+            "It is important to note",
+            "One must understand",
+        ]
+        for phrase in kill_phrases:
+            text = text.replace(phrase, "")
+
+        # Normalize spacing
+        text = text.strip()
+        return text
+
+    def generate_post(self) -> str:
+        prompt = self._build_prompt()
+
+        response = self.client.models.generate_content(
+            model="gemini-2.0-flash",
+            contents=prompt,
+        )
+
         post = response.text.strip()
-        if len(post) > 280:
-            post = post[:277] + "..."
+        post = self._cleanup(post)
+
         return post
