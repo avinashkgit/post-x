@@ -8,162 +8,91 @@ class GeneratePostAgent(Agent):
         self.client = genai.Client(api_key=api_key)
         super().__init__(self.client)
 
-        # ---- Persona (who is speaking) ----
+        # 2026 Trend: "Pattern Interrupt" hooks that stop the thumb
+        self.hooks = [
+            "i feel like we’re all collectively pretending this isn't weird",
+            "unpopular opinion, maybe, but i’ve been thinking about",
+            "the more i look at this, the more it feels like a glitch",
+            "just saw something that made me realize how much has changed",
+            "it’s 1 AM and i’m still stuck on why that one update feels so wrong",
+            "honestly? i think we’re reaching a breaking point with",
+        ]
+
+        # Personas with distinct "digital voices"
         self.personas = [
-            "an office worker scrolling late at night",
-            "a tired but thoughtful professional",
-            "someone slightly burnt out but observant",
-            "a curious person who overthinks things",
-            "someone casually sharing a thought with friends",
-            "a tech-aware but non-expert person",
-            "a fan reacting emotionally, not logically",
+            "a burnt-out creative who types in lowercase",
+            "a skeptical tech worker who uses way too many line breaks",
+            "a casual observer who writes like they're texting a group chat",
+            "a thoughtful overthinker who gets slightly too deep into the details",
         ]
 
-        # ---- Emotional state (how it feels) ----
-        self.emotions = [
-            "a bit tired",
-            "slightly annoyed",
-            "quietly hopeful",
-            "confused but curious",
-            "mildly frustrated",
-            "thoughtful and calm",
-            "unsure how to feel",
+        # Context details to ground the post in "reality"
+        self.anchors = [
+            "that new interface update",
+            "the way everyone is reacting to the news",
+            "how fast the feed is moving today",
+            "a weirdly specific notification i just got",
+            "the quietness of the office right now",
         ]
 
-        # ---- Intent styles (how the post behaves) ----
-        self.intents = [
-            "reacting in the moment",
-            "thinking out loud",
-            "sharing a small realization",
-            "venting without blaming",
-            "reflecting without teaching",
-            "wondering rather than concluding",
-        ]
-
-        # ---- Length bands ----
-        self.length_modes = {
-            "short": "Keep it brief and natural. One or two short paragraphs at most.",
-            "medium": "Let it breathe. A few short paragraphs with pauses.",
-            "long": "Write a longer post with multiple short paragraphs. It can ramble slightly."
-        }
-
-        # ---- Core topic prompts ----
-        self.topics = [
-            # News / current events
-            (
-                "React to a news or current event without summarizing it. "
-                "Avoid facts or headlines. Focus only on how it makes you feel or think."
-            ),
-
-            # Humor / memes
-            (
-                "Share a funny or relatable thought based on everyday life. "
-                "Dry humor, irony, or quiet sarcasm works best."
-            ),
-
-            # Reflection / life
-            (
-                "Share a personal thought about life, growth, routine, or change. "
-                "Not advice. Just experience."
-            ),
-
-            # Tech / AI
-            (
-                "Share a casual thought about technology, AI, or digital life. "
-                "Curious or skeptical, but never expert-like."
-            ),
-
-            # Lifestyle / mental state
-            (
-                "Write about habits, burnout, relationships, mental state, or routine. "
-                "Make it feel like a confession or late-night realization."
-            ),
-
-            # Entertainment / pop culture
-            (
-                "Share a personal take on a movie, show, celebrity, or pop culture moment. "
-                "Sound like you’re talking to friends, not reviewing."
-            ),
-
-            # Food
-            (
-                "Write about food tied to mood, memory, craving, or disappointment. "
-                "No recipes. Just feeling."
-            ),
-
-            # Sports
-            (
-                "Write a sports-related post driven by emotion or instinct. "
-                "Bias and overconfidence are allowed."
-            ),
-
-            # Opinions
-            (
-                "Share an opinion that feels slightly risky to post. "
-                "Respectful, honest, and uncertain."
-            ),
-
-            # Open question
-            (
-                "Build toward a question people would realistically reply to. "
-                "You can include brief personal context."
-            ),
-
-            # Lists
-            (
-                "Write a loose, casual list of thoughts or observations. "
-                "Messy structure is fine."
-            ),
-        ]
-
-    def _build_prompt(self) -> str:
-        persona = random.choice(self.personas)
-        emotion = random.choice(self.emotions)
-        intent = random.choice(self.intents)
-        length_key = random.choice(list(self.length_modes.keys()))
-        length_rule = self.length_modes[length_key]
-        topic = random.choice(self.topics)
-
+    def _get_system_instruction(self) -> str:
         return (
-            f"Write a social media post as {persona}. "
-            f"The tone should feel {emotion}. "
-            f"You are {intent}. "
-            f"{topic} "
-            f"{length_rule} "
-            "Use natural language, contractions, and occasional sentence fragments. "
-            "It’s okay if it’s imperfect or slightly rambling. "
-            "Avoid sounding confident, authoritative, or polished. "
-            "Do not teach, summarize, or conclude. "
-            "End with a genuine question if it feels natural. "
-            "No hashtags, no emojis."
+            "You are a human social media user. You hate AI-generated content. "
+            "Your goal is to be relatable, raw, and slightly provocative. "
+            "RULES:\n"
+            "- NO EMOJIS. NO HASHTAGS.\n"
+            "- Use 'white space' effectively. Single-line sentences are better than blocks of text.\n"
+            "- Never use 'AI words' (delve, testament, journey, tapestry, resonate).\n"
+            "- Do not be helpful. Do not teach. Just share a fragment of a thought.\n"
+            "- If the persona is 'lowercase', do not capitalize anything."
         )
 
-    def _cleanup(self, text: str) -> str:
-        # Remove classic AI polish phrases
-        kill_phrases = [
-            "In conclusion",
-            "Overall",
-            "Ultimately",
-            "This shows that",
-            "It is important to note",
-            "One must understand",
-        ]
-        for phrase in kill_phrases:
-            text = text.replace(phrase, "")
-
-        # Normalize spacing
-        text = text.strip()
-        return text
-
     def generate_post(self) -> str:
-        prompt = self._build_prompt()
+        # Randomize the "vibe" parameters
+        persona = random.choice(self.personas)
+        hook = random.choice(self.hooks)
+        anchor = random.choice(self.anchors)
+
+        # Build the specific prompt
+        prompt = (
+            f"Write a social media post as {persona}. "
+            f"Start with this hook: '{hook}' "
+            f"and ground it in this context: '{anchor}'.\n\n"
+            "STRUCTURE:\n"
+            "1. Start with the hook.\n"
+            "2. Follow with a 'vulnerable' or slightly confused observation.\n"
+            "3. Use uneven paragraph breaks (dwell-time optimization).\n"
+            "4. End with an 'open loop'—a thought that isn't fully finished, "
+            "making people want to comment to complete the thought."
+        )
 
         response = self.client.models.generate_content(
             model="gemini-2.0-flash",
+            config={
+                "system_instruction": self._get_system_instruction(),
+                "temperature": 0.85,  # Higher temp = more human-like variance
+                "top_p": 0.95,
+            },
             contents=prompt,
         )
 
-        post = response.text.strip()
-        post = self._cleanup(post)
+        final_post = self._clean_and_format(response.text.strip())
+        return final_post
 
-        return post
+    def _clean_and_format(self, text: str) -> str:
+        # Remove any lingering AI signatures or markdown fluff
+        text = text.replace('"', "").replace("**", "")
+
+        # 30% chance to force the whole post to lowercase for 'authentic' aesthetic
+        if random.random() < 0.3:
+            text = text.lower()
+
+        # Clean up double line breaks that are too large
+        lines = [line.strip() for line in text.split("\n") if line.strip()]
+
+        # Re-inject organic spacing (mix of single and double breaks)
+        formatted_post = ""
+        for line in lines:
+            formatted_post += line + ("\n\n" if random.random() > 0.4 else "\n")
+
+        return formatted_post.strip()
