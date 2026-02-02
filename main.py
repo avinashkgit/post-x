@@ -20,11 +20,11 @@ post = gen_agent.generate_post()
 print(f"📝 Generated post: {post}")
 
 print("📤 Posting to X...")
-result = poster.post(post)
-
-if result:
+try:
+    result = poster.post(post)
     print("✅ Post successful!")
-else:
-    print("❌ Post failed!")
+except RuntimeError as e:
+    print(f"❌ Post failed: {e}")
+    raise  # Re-raise to fail the workflow
 
 print("🎉 Bot execution complete.")

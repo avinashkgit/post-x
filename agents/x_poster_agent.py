@@ -95,7 +95,7 @@ class XPosterAgent:
     # ────────────────────────────────────────────────
     # Posting methods
     # ────────────────────────────────────────────────
-    def post(self, text: str) -> Optional[str]:
+    def post(self, text: str) -> str:
         """Post simple text tweet"""
         try:
             response = self.client.create_tweet(text=text)
@@ -107,9 +107,9 @@ class XPosterAgent:
             logger.info(f"✅ Posted | tweet_id={tweet_id}")
             return tweet_id
 
-        except Exception:
+        except Exception as e:
             logger.exception("❌ Failed to post")
-            return None
+            raise RuntimeError(f"Failed to post tweet: {str(e)}")
 
     def post_article(self, title: str, slug: str) -> Optional[str]:
         """Post article link without image"""
