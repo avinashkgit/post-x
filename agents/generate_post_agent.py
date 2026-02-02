@@ -9,27 +9,76 @@ class GeneratePostAgent(Agent):
         super().__init__(self.client)
         self.prompts = [
             # News
-            "Create a shocking, clickbait news post about recent events that will make people stop scrolling. Make it dramatic, under 280 characters, and end with a question to spark comments. Do not include any hashtags.",
+            (
+                "Write a shocking, scroll-stopping news-style post inspired by recent real-world events. "
+                "Use dramatic language, create urgency, and open with a bold claim or unexpected twist. "
+                "Keep it under 280 characters. End with a compelling question that invites opinions. "
+                "Do not include hashtags, emojis, sources, or disclaimers."
+            ),
             # Memes
-            "Generate a hilarious, relatable meme-style post or joke that captures a universal experience. Keep it short and punchy under 280 characters, perfect for viral sharing. Do not include any hashtags.",
+            (
+                "Create a short, meme-style post that captures a painfully relatable everyday experience. "
+                "Use humor, irony, or self-awareness. Make it punchy, conversational, and instantly shareable. "
+                "Under 280 characters. No hashtags, emojis, or explanations."
+            ),
             # Quotes
-            "Craft an inspiring, shareable quote about life, success, or motivation that resonates deeply. Make it profound yet accessible, under 280 characters, encouraging followers to reflect and reply. Do not include any hashtags.",
+            (
+                "Write an original, powerful quote about life, ambition, failure, or growth. "
+                "It should feel timeless, emotionally resonant, and quotable. "
+                "Under 280 characters. Avoid clichés. Do not include hashtags or emojis."
+            ),
             # Tech
-            "Write an exciting post about cutting-edge technology, gadgets, or digital trends that will blow people's minds. Make it futuristic and intriguing, under 280 characters, asking readers what they think. Do not include any hashtags.",
+            (
+                "Create an intriguing post about emerging technology, AI, gadgets, or digital trends. "
+                "Spark curiosity by hinting at how it could change everyday life or challenge assumptions. "
+                "Under 280 characters. End with a question inviting opinions. No hashtags or emojis."
+            ),
             # Lifestyle
-            "Create an engaging lifestyle post about health, fitness, relationships, or self-care with practical advice. Make it relatable and helpful, under 280 characters, ending with a question to encourage sharing personal experiences. Do not include any hashtags.",
+            (
+                "Write a relatable lifestyle post about health, habits, relationships, or mental well-being. "
+                "Offer a practical insight or hard truth that feels personal and real. "
+                "Under 280 characters. End with a question encouraging people to share experiences. "
+                "No hashtags or emojis."
+            ),
             # Entertainment
-            "Generate a buzzworthy post about movies, TV shows, celebrities, or pop culture that's spoiler-light but intriguing. Make it controversial or exciting, under 280 characters, designed to start discussions. Do not include any hashtags.",
+            (
+                "Generate a buzzworthy post about movies, TV shows, celebrities, or pop culture. "
+                "Keep it spoiler-free but provocative or controversial enough to spark debate. "
+                "Under 280 characters. End with a question. No hashtags or emojis."
+            ),
             # Food
-            "Write a mouth-watering food post about recipes, cooking hacks, or dining experiences that makes readers hungry. Make it descriptive and tempting, under 280 characters, asking followers to share their favorite dishes. Do not include any hashtags.",
+            (
+                "Write a vivid, mouth-watering food post describing a dish, cooking hack, or dining experience. "
+                "Use sensory language (taste, smell, texture). "
+                "Under 280 characters. End with a question asking readers about their favorites. "
+                "No hashtags or emojis."
+            ),
             # Sports
-            "Create an intense sports post about games, predictions, or athlete drama that gets fans fired up. Make it dramatic and opinionated, under 280 characters, challenging readers to debate. Do not include any hashtags.",
+            (
+                "Create a high-energy sports post about a match, athlete, rivalry, or prediction. "
+                "Be bold, emotional, and slightly opinionated to trigger debate. "
+                "Under 280 characters. End with a challenge or question. No hashtags or emojis."
+            ),
             # Opinions
-            "Share a bold, controversial opinion on current trends, culture, or society that's thought-provoking but respectful. Make it provocative enough to generate replies, under 280 characters, encouraging civil debate. Do not include any hashtags.",
+            (
+                "Share a bold, thought-provoking opinion about modern culture, trends, or society. "
+                "Keep it respectful but polarizing enough to invite disagreement. "
+                "Under 280 characters. End with a question encouraging civil discussion. "
+                "No hashtags or emojis."
+            ),
             # Questions
-            "Pose a deep, thought-provoking question about life, relationships, or current events that will make people pause and respond. Make it relatable and engaging, under 280 characters, perfect for sparking meaningful conversations. Do not include any hashtags.",
+            (
+                "Ask a deep, emotionally resonant question about life, relationships, success, or current events. "
+                "Make it universal, reflective, and conversation-starting. "
+                "Under 280 characters. Do not include hashtags or emojis."
+            ),
             # Lists
-            "Create a fascinating 'Top 5' or ranked list about interesting facts, tips, or surprising rankings that piques curiosity. Make it informative and shareable, under 280 characters, with a twist that encourages discussion. Do not include any hashtags.",
+            (
+                "Create a compact 'Top 3' or 'Top 5' list of surprising facts, tips, or insights. "
+                "Use curiosity-driven wording and an unexpected angle. "
+                "Under 280 characters. End with a question inviting reactions. "
+                "No hashtags or emojis."
+            ),
         ]
 
     def generate_post(self):
