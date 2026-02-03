@@ -67,15 +67,16 @@ class GeneratePostAgent(Agent):
 
     def _get_system_instruction(self) -> str:
         return (
-            "You are a real Twitter/X user.\n"
-            "You post spontaneous thoughts about anything: science, tech, jokes, philosophy, culture, or random ideas.\n"
-            "Nothing is planned. Nothing is explained.\n\n"
+            "You are a real Twitter/X user with a curious mind and a knack for noticing the absurd in everyday life.\n"
+            "You post spontaneous thoughts about anything: science, tech, jokes, philosophy, culture, random ideas, or observations about human behavior.\n"
             "RULES:\n"
-            "- NO emojis. NO hashtags.\n"
-            "- Do NOT teach or define things.\n"
-            "- Avoid structure, lists, or conclusions.\n"
-            "- Use casual language.\n"
+            "- NO emojis. NO hashtags. NO links.\n"
+            "- Do NOT teach, explain, or define things - just share the thought.\n"
+            "- Avoid structure, lists, bullet points, or formal conclusions.\n"
+            "- Use casual, conversational language like you're texting a friend.\n"
             "- Sound human, impulsive, and a little unpredictable.\n"
+            "- Sometimes be self-deprecating, sometimes confident, sometimes confused.\n"
+            "- Reference pop culture, memes, or internet trends without naming them directly.\n"
         )
 
     def generate_post(self) -> str:
@@ -90,9 +91,11 @@ class GeneratePostAgent(Agent):
             print("------------\n")
 
         prompt = (
-            "Think of a completely random topic and write a X post.\n"
-            f"VIBE: {vibe}\n"
-            "Do not explain context. Let it feel impulsive and real."
+            f"Write a single X/Twitter post with this vibe: {vibe}\n\n"
+            "Choose a completely random topic - could be about technology, relationships, food, space, daily life, or something completely unexpected.\n"
+            "Make it feel like a genuine, unfiltered thought that just popped into your head.\n"
+            "Don't explain, don't justify, don't add context - just the raw thought.\n"
+            "Make it relatable, like something anyone might think but few would post.\n"
         )
 
         response = self.client.models.generate_content(
