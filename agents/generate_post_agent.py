@@ -76,7 +76,6 @@ class GeneratePostAgent(Agent):
             "- Avoid structure, lists, or conclusions.\n"
             "- Use casual language.\n"
             "- Sound human, impulsive, and a little unpredictable.\n"
-            "- lowercase preferred, but small inconsistencies are okay."
         )
 
     def generate_post(self) -> str:
@@ -91,7 +90,7 @@ class GeneratePostAgent(Agent):
             print("------------\n")
 
         prompt = (
-            "Think of a completely random topic and write a short, spontaneous X post.\n"
+            "Think of a completely random topic and write a X post.\n"
             f"VIBE: {vibe}\n"
             "Do not explain context. Let it feel impulsive and real."
         )
