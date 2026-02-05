@@ -14,40 +14,52 @@ class GeneratePostAgent(Agent):
 
         # Vibes grouped loosely by time-of-day (IST)
         self.vibe_library = {
-            "chaotic": [
-                "brain glitch moment",
-                "late-night thought",
-                "unhinged but harmless thought",
-                "this-shouldnt-make-sense-but-does",
-                "thought that feels illegal to post",
-                "absurd internet thought",
-                "random joke that barely makes sense",
-            ],
-            "thoughtful": [
-                "quiet realization",
-                "unexpected insight",
-                "soft philosophical wondering",
-                "question that isnt really a question",
-                "meta thought about thinking",
-                "curious thought",
-                "thinking out loud",
-            ],
-            "snarky": [
-                "mildly sarcastic realization",
-                "light hot take",
-                "confident but casual opinion",
-                "opinion stated without defending it",
-                "observation about online behavior",
-                "something everyone online does but nobody admits",
-            ],
-            "chill": [
-                "calm appreciation",
-                "small thing that made today better",
-                "noticing something nice for no reason",
-                "playful confusion",
-                "quietly enjoying something",
-                "funny observation",
-            ],
+            "chaotic": {
+                "description": "wild, erratic, late-night energy - impulsive and slightly unhinged",
+                "examples": [
+                    "brain glitch moment",
+                    "late-night thought",
+                    "unhinged but harmless thought",
+                    "this-shouldnt-make-sense-but-does",
+                    "thought that feels illegal to post",
+                    "absurd internet thought",
+                    "random joke that barely makes sense",
+                ]
+            },
+            "thoughtful": {
+                "description": "quiet, introspective, evening reflection - deep but casual pondering",
+                "examples": [
+                    "quiet realization",
+                    "unexpected insight",
+                    "soft philosophical wondering",
+                    "question that isnt really a question",
+                    "meta thought about thinking",
+                    "curious thought",
+                    "thinking out loud",
+                ]
+            },
+            "snarky": {
+                "description": "witty, sarcastic, afternoon edge - confident opinions with bite",
+                "examples": [
+                    "mildly sarcastic realization",
+                    "light hot take",
+                    "confident but casual opinion",
+                    "opinion stated without defending it",
+                    "observation about online behavior",
+                    "something everyone online does but nobody admits",
+                ]
+            },
+            "chill": {
+                "description": "calm, appreciative, morning ease - relaxed and positive vibes",
+                "examples": [
+                    "calm appreciation",
+                    "small thing that made today better",
+                    "noticing something nice for no reason",
+                    "playful confusion",
+                    "quietly enjoying something",
+                    "funny observation",
+                ]
+            },
         }
 
     def _get_current_vibe_category(self):
@@ -84,11 +96,13 @@ class GeneratePostAgent(Agent):
             "- Mix high-concept topics with mundane ones for unexpected juxtapositions.\n"
             "- Vary sentence length: short and punchy or rambling.\n"
             "- Occasionally draw from 'personal' (fictional) experiences to add relatability.\n"
+            "- Occasionally incorporate subtle Indian cultural elements (e.g., references to chai, monsoon, or Bollywood vibes) when they fit naturally, without forcing them.\n"
         )
 
     def generate_post(self) -> str:
         category, local_hour, time_of_day = self._get_current_vibe_category()
-        vibe = random.choice(self.vibe_library[category])
+        vibe = random.choice(self.vibe_library[category]["examples"])
+        vibe_description = self.vibe_library[category]["description"]
 
         token_limits = {"chaotic": 60, "chill": 80, "snarky": 100, "thoughtful": 125}
         token_limit = token_limits[category]
@@ -99,17 +113,27 @@ class GeneratePostAgent(Agent):
             print(f"Time of Day: {time_of_day}")
             print(f"Category   : {category}")
             print(f"Vibe       : {vibe}")
+            print(f"Description: {vibe_description}")
             print(f"Token Limit: {token_limit}")
             print("------------\n")
 
-        prompt = (
-            f"Write a single X/Twitter post with this vibe: {vibe}, considering it's currently {time_of_day} ({local_hour}:00) in India.\n\n"
-            "Choose a completely random, unexpected topic - could be about technology, relationships, food, space, daily life, obscure hobbies, hypothetical scenarios, or something wildly offbeat like why vending machines exist or if clouds have feelings.\n"
+        prompt_templates = [
+            f"Write a single X/Twitter post with this vibe: {vibe} ({vibe_description}), considering it's currently {time_of_day} ({local_hour}:00) in India.\n\n"
+            "Choose a completely random, unexpected topic - could be about technology, relationships, food, space, daily life, politics, obscure hobbies, hypothetical scenarios, or something wildly offbeat like why vending machines exist or if clouds have feelings.\n"
             "Make it feel like a genuine, unfiltered thought that just popped into your head, with a subtle hook or twist to make it engaging.\n"
             "Don't explain, don't justify, don't add context - just the raw thought.\n"
             "Make it relatable, like something anyone might think but few would post, and avoid common internet clichés.\n"
-            "Occasionally end with an ambiguous question to invite replies.\n"
-        )
+            "Occasionally end with an ambiguous question to invite replies.\n",
+            f"Imagine you're scrolling through X at {local_hour}:00 in India during {time_of_day}. What unfiltered thought with a {vibe} ({vibe_description}) feel pops into your head?\n\n"
+            "Pick any random topic - tech, relationships, food, politics, space, daily absurdities, or bizarre hypotheticals.\n"
+            "Share it raw, no explanations, just the impulsive idea that feels too real to ignore.\n"
+            "Add a twist or question to spark curiosity, keeping it casual and human.\n",
+            f"Channel a {vibe} ({vibe_description}) mood at {local_hour}:00 {time_of_day} in India. What's the one weird thought you'd post without thinking?\n\n"
+            "Topic could be anything from mundane daily stuff to wild political musings or sci-fi daydreams.\n"
+            "Keep it short, relatable, and ending with something that makes people pause or reply.\n"
+            "No fluff, just the core unfiltered notion.\n"
+        ]
+        prompt = random.choice(prompt_templates)
 
         response = self.client.models.generate_content(
             model="gemini-2.0-flash",
