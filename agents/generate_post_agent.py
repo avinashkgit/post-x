@@ -51,19 +51,23 @@ class GeneratePostAgent(Agent):
         }
 
     def _get_current_vibe_category(self):
-        """Determine vibe category based on India time (Asia/Kolkata)."""
+        """Determine vibe category and time of day based on India time (Asia/Kolkata)."""
         local_hour = datetime.now(ZoneInfo("Asia/Kolkata")).hour
 
         if 0 <= local_hour < 6:
             category = "chaotic"
+            time_of_day = "late night"
         elif 6 <= local_hour < 12:
             category = "chill"
+            time_of_day = "morning"
         elif 12 <= local_hour < 18:
             category = "snarky"
+            time_of_day = "afternoon"
         else:
             category = "thoughtful"
+            time_of_day = "evening"
 
-        return category, local_hour
+        return category, local_hour, time_of_day
 
     def _get_system_instruction(self) -> str:
         return (
@@ -75,27 +79,36 @@ class GeneratePostAgent(Agent):
             "- Avoid structure, lists, bullet points, or formal conclusions.\n"
             "- Use casual, conversational language like you're texting a friend.\n"
             "- Sound human, impulsive, and a little unpredictable.\n"
-            "- Sometimes be self-deprecating, sometimes confident, sometimes confused.\n"
-            "- Reference pop culture, memes, or internet trends without naming them directly.\n"
+            "- Sometimes be self-deprecating, sometimes confident, sometimes confused, excited, or nostalgic.\n"
+            "- Reference pop culture, memes, or internet trends indirectly (e.g., allude to viral ideas without naming them).\n"
+            "- Mix high-concept topics with mundane ones for unexpected juxtapositions.\n"
+            "- Vary sentence length: short and punchy or rambling.\n"
+            "- Occasionally draw from 'personal' (fictional) experiences to add relatability.\n"
         )
 
     def generate_post(self) -> str:
-        category, local_hour = self._get_current_vibe_category()
+        category, local_hour, time_of_day = self._get_current_vibe_category()
         vibe = random.choice(self.vibe_library[category])
+
+        token_limits = {"chaotic": 60, "chill": 80, "snarky": 100, "thoughtful": 125}
+        token_limit = token_limits[category]
 
         if self.debug:
             print("\n--- DEBUG ---")
             print(f"India Hour : {local_hour}")
+            print(f"Time of Day: {time_of_day}")
             print(f"Category   : {category}")
             print(f"Vibe       : {vibe}")
+            print(f"Token Limit: {token_limit}")
             print("------------\n")
 
         prompt = (
-            f"Write a single X/Twitter post with this vibe: {vibe}\n\n"
-            "Choose a completely random topic - could be about technology, relationships, food, space, daily life, or something completely unexpected.\n"
-            "Make it feel like a genuine, unfiltered thought that just popped into your head.\n"
+            f"Write a single X/Twitter post with this vibe: {vibe}, considering it's currently {time_of_day} in India.\n\n"
+            "Choose a completely random, unexpected topic - could be about technology, relationships, food, space, daily life, obscure hobbies, hypothetical scenarios, or something wildly offbeat like why vending machines exist or if clouds have feelings.\n"
+            "Make it feel like a genuine, unfiltered thought that just popped into your head, with a subtle hook or twist to make it engaging.\n"
             "Don't explain, don't justify, don't add context - just the raw thought.\n"
-            "Make it relatable, like something anyone might think but few would post.\n"
+            "Make it relatable, like something anyone might think but few would post, and avoid common internet clichés.\n"
+            "Occasionally end with an ambiguous question to invite replies.\n"
         )
 
         response = self.client.models.generate_content(
@@ -103,7 +116,7 @@ class GeneratePostAgent(Agent):
             config={
                 "system_instruction": self._get_system_instruction(),
                 "temperature": 1.2,  # high randomness
-                "max_output_tokens": 50,  # short, tweet-like
+                "max_output_tokens": token_limit,
             },
             contents=prompt,
         )
