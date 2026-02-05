@@ -97,6 +97,8 @@ class GeneratePostAgent(Agent):
             "- Vary sentence length: short and punchy or rambling.\n"
             "- Occasionally draw from 'personal' (fictional) experiences to add relatability.\n"
             "- Occasionally incorporate subtle Indian cultural elements (e.g., references to chai, monsoon, or Bollywood vibes) when they fit naturally, without forcing them.\n"
+            "- Avoid repeating similar thoughts or ideas; aim for fresh, unique content each time.\n"
+            "- Keep posts concise and avoid repeating phrases within the post itself.\n"
         )
 
     def generate_post(self) -> str:
@@ -122,15 +124,18 @@ class GeneratePostAgent(Agent):
             "Choose a completely random, unexpected topic - could be about technology, relationships, food, space, daily life, politics, obscure hobbies, hypothetical scenarios, or something wildly offbeat like why vending machines exist or if clouds have feelings.\n"
             "Make it feel like a genuine, unfiltered thought that just popped into your head, with a subtle hook or twist to make it engaging.\n"
             "Don't explain, don't justify, don't add context - just the raw thought.\n"
+            "Do not mention the time of day, hour, or any temporal references in the post itself.\n"
             "Make it relatable, like something anyone might think but few would post, and avoid common internet clichés.\n"
             "Occasionally end with an ambiguous question to invite replies.\n",
             f"Imagine you're scrolling through X at {local_hour}:00 in India during {time_of_day}. What unfiltered thought with a {vibe} ({vibe_description}) feel pops into your head?\n\n"
             "Pick any random topic - tech, relationships, food, politics, space, daily absurdities, or bizarre hypotheticals.\n"
             "Share it raw, no explanations, just the impulsive idea that feels too real to ignore.\n"
+            "Do not reference the time or hour in the post.\n"
             "Add a twist or question to spark curiosity, keeping it casual and human.\n",
             f"Channel a {vibe} ({vibe_description}) mood at {local_hour}:00 {time_of_day} in India. What's the one weird thought you'd post without thinking?\n\n"
             "Topic could be anything from mundane daily stuff to wild political musings or sci-fi daydreams.\n"
             "Keep it short, relatable, and ending with something that makes people pause or reply.\n"
+            "Do not include any mentions of time in the post itself.\n"
             "No fluff, just the core unfiltered notion.\n"
         ]
         prompt = random.choice(prompt_templates)
