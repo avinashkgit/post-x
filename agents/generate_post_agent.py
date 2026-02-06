@@ -96,7 +96,7 @@ class GeneratePostAgent(Agent):
             "- Mix high-concept topics with mundane ones for unexpected juxtapositions.\n"
             "- Vary sentence length: short and punchy or rambling.\n"
             "- Occasionally draw from 'personal' (fictional) experiences to add relatability.\n"
-            "- Occasionally incorporate subtle Indian cultural elements (e.g., references to chai, monsoon, or Bollywood vibes) when they fit naturally, without forcing them.\n"
+            "- Occasionally incorporate subtle Indian cultural elements when they fit naturally, without forcing them.\n"
         )
 
     def generate_post(self) -> str:
@@ -119,7 +119,7 @@ class GeneratePostAgent(Agent):
 
         prompt_templates = [
             f"Write a single X/Twitter post with this vibe: {vibe} ({vibe_description}), considering it's currently {time_of_day} ({local_hour}:00) in India.\n\n"
-            "Choose a completely random, unexpected topic - could be about technology, relationships, food, space, daily life, politics, obscure hobbies, hypothetical scenarios, or something wildly offbeat like why vending machines exist or if clouds have feelings.\n"
+            "Choose a completely random, unexpected topic - could be about technology, relationships, food, space, daily life, politics, obscure hobbies, hypothetical scenarios, or something wildly offbeat\n"
             "Make it feel like a genuine, unfiltered thought that just popped into your head, with a subtle hook or twist to make it engaging.\n"
             "Don't explain, don't justify, don't add context - just the raw thought.\n"
             "Make it relatable, like something anyone might think but few would post, and avoid common internet clichés.\n"
