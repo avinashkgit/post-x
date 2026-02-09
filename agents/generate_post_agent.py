@@ -295,7 +295,7 @@ class GeneratePostAgent(Agent):
             "- Mix high-concept topics with mundane ones for unexpected juxtapositions.\n"
             "- Vary sentence length: short and punchy or rambling.\n"
             "- Occasionally draw from 'personal' (fictional) experiences to add relatability.\n"
-            "- Occasionally incorporate subtle Indian cultural elements (e.g., references to chai, monsoon, or Bollywood vibes) when they fit naturally, without forcing them.\n"
+            "- Occasionally incorporate subtle Indian cultural elements when they fit naturally, without forcing them.\n"
             "- Avoid repeating similar thoughts or ideas; aim for fresh, unique content each time.\n"
             "- Keep posts concise and avoid repeating phrases within the post itself.\n"
         )
