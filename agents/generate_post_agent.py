@@ -121,7 +121,7 @@ class GeneratePostAgent(Agent):
 
         prompt_templates = [
             f"Write a single X/Twitter post with this vibe: {vibe} ({vibe_description}), considering it's currently {time_of_day} ({local_hour}:00) in India.\n\n"
-            "Choose a completely random, unexpected topic - could be about technology, relationships, food, space, daily life, politics, obscure hobbies, hypothetical scenarios, or something wildly offbeat like why vending machines exist or if clouds have feelings.\n"
+            "Choose a completely random, unexpected topic - could be about technology, relationships, food, space, daily life, politics, obscure hobbies, hypothetical scenarios, or something wildly offbeat\n"
             "Make it feel like a genuine, unfiltered thought that just popped into your head, with a subtle hook or twist to make it engaging.\n"
             "Don't explain, don't justify, don't add context - just the raw thought.\n"
             "Do not mention the time of day, hour, or any temporal references in the post itself.\n"
