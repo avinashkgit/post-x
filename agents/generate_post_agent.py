@@ -24,6 +24,10 @@ class GeneratePostAgent(Agent):
                     "thought that feels illegal to post",
                     "absurd internet thought",
                     "random joke that barely makes sense",
+                    "what if scenario that doesnt make sense",
+                    "truly unhinged observation",
+                    "the chaos is getting to me",
+                    "internet made me think this",
                 ]
             },
             "thoughtful": {
@@ -36,6 +40,11 @@ class GeneratePostAgent(Agent):
                     "meta thought about thinking",
                     "curious thought",
                     "thinking out loud",
+                    "random existential moment",
+                    "something thats been stuck in my head",
+                    "soft realization about life",
+                    "weirdly profound observation",
+                    "thought spiral but make it poetic",
                 ]
             },
             "snarky": {
@@ -47,6 +56,11 @@ class GeneratePostAgent(Agent):
                     "opinion stated without defending it",
                     "observation about online behavior",
                     "something everyone online does but nobody admits",
+                    "sarcastic commentary on existence",
+                    "annoyed but make it funny",
+                    "controversial opinion that isnt really controversial",
+                    "soft roast of internet culture",
+                    "painfully accurate take",
                 ]
             },
             "chill": {
@@ -58,6 +72,191 @@ class GeneratePostAgent(Agent):
                     "playful confusion",
                     "quietly enjoying something",
                     "funny observation",
+                    "gentle amusement",
+                    "life moment captured",
+                    "found peace in something silly",
+                    "vibe check: good",
+                    "unexpectedly wholesome thought",
+                ]
+            },
+            "nostalgic": {
+                "description": "wistful, reminiscent, bittersweet - lost in memories and what used to be",
+                "examples": [
+                    "remembering something from forever ago",
+                    "wow i miss that era",
+                    "that was actually the peak",
+                    "randomly thinking about the past",
+                    "things used to hit different",
+                    "old memory suddenly popping up",
+                    "culture was different back then",
+                    "golden age moment",
+                    "remembering when things were simpler",
+                    "time travel in my head",
+                ]
+            },
+            "curious": {
+                "description": "inquisitive, fascinated, wonder-struck - genuinely wanting to understand",
+                "examples": [
+                    "genuinely confused about something",
+                    "rabbit hole rabbit hole",
+                    "how does this even work",
+                    "wait but why though",
+                    "going down a curiosity spiral",
+                    "legitimately mind-blown",
+                    "never thought about it like that",
+                    "okay but what if",
+                    "im hyperfixating on this thought",
+                    "this rabbit hole is deep",
+                ]
+            },
+            "energetic": {
+                "description": "hyped, excited, buzzing - full of enthusiasm and momentum",
+                "examples": [
+                    "cant stop thinking about this",
+                    "this is actually insane",
+                    "brain is going at 100mph",
+                    "genuinely excited about something dumb",
+                    "hyperfixation energy",
+                    "literally cannot stop",
+                    "ive been thinking about this for hours",
+                    "the thoughts are THOUGHTS",
+                    "way too into this right now",
+                    "unhinged enthusiasm mode",
+                ]
+            },
+            "cynical": {
+                "description": "jaded, sardonic, world-weary - seeing through the noise with dark humor",
+                "examples": [
+                    "why does nobody talk about this",
+                    "honestly kind of absurd",
+                    "capitalist hellscape moment",
+                    "were all just pretending arent we",
+                    "everything is kinda funny if you think about it",
+                    "nothing matters but also everything",
+                    "the system is broken and nobody cares",
+                    "dark humor because reality is dark",
+                    "its all a scam isnt it",
+                    "we live in a simulation apparently",
+                ]
+            },
+            "melancholic": {
+                "description": "sad but poetic, bittersweet - beauty in the sadness",
+                "examples": [
+                    "soft sadness energy",
+                    "things arent what they used to be",
+                    "beautiful in a weird broken way",
+                    "loneliness hit different tonight",
+                    "there's something haunting about this",
+                    "why does sadness feel poetic",
+                    "ache in a quiet way",
+                    "mourning something i cant name",
+                    "melancholy without the drama",
+                    "beautifully tragic moment",
+                ]
+            },
+            "absurd": {
+                "description": "surreal, ridiculous, nonsensical - laughing at the illogic of it all",
+                "examples": [
+                    "why is this a thing",
+                    "the world is genuinely hilarious",
+                    "this makes no sense and i love it",
+                    "we collectively agreed to this",
+                    "humanity is a fever dream",
+                    "watching reality unfold like a comedy",
+                    "the absurdity is the point",
+                    "this is peak comedy",
+                    "logic has left the chat",
+                    "the simulation has a sense of humor",
+                ]
+            },
+            "vulnerable": {
+                "description": "raw, honest, unguarded - letting the walls down for real",
+                "examples": [
+                    "i dont know how to feel about this",
+                    "genuinely struggling with something",
+                    "scared to admit this but here we are",
+                    "feeling small tonight",
+                    "needing to say this out loud",
+                    "raw moment",
+                    "this hurts in ways i cant explain",
+                    "admitting something ive been hiding",
+                    "too real right now",
+                    "stripped down and honest",
+                ]
+            },
+            "inspired": {
+                "description": "motivated, hopeful, seeing potential - feeling the spark",
+                "examples": [
+                    "genuinely inspired by something",
+                    "the future could be beautiful",
+                    "what if we actually tried",
+                    "feeling creative energy",
+                    "the possibilities are endless",
+                    "this makes me want to create",
+                    "hope hit different today",
+                    "belief in something bigger",
+                    "lets actually do something",
+                    "the spark is real right now",
+                ]
+            },
+            "petty": {
+                "description": "annoyed, nitpicky, venting - small grievances blown up",
+                "examples": [
+                    "why does this bother me so much",
+                    "okay but like why though",
+                    "im beefing with something silly",
+                    "this is driving me insane for no reason",
+                    "the pettiness is strong",
+                    "fighting with my own brain",
+                    "genuinely mad about something dumb",
+                    "the audacity of this thing",
+                    "i cant let this go",
+                    "the irritation is real",
+                ]
+            },
+            "reflective": {
+                "description": "measured, introspective, processing - taking stock and making sense",
+                "examples": [
+                    "putting thoughts together",
+                    "reflection time has begun",
+                    "connecting the dots",
+                    "what does it all mean though",
+                    "taking inventory of life",
+                    "piecing it all together",
+                    "moment of clarity",
+                    "seeing patterns everywhere",
+                    "the bigger picture is",
+                    "understanding something finally",
+                ]
+            },
+            "anxious": {
+                "description": "worried, spiraling, overthinking - the mind racing",
+                "examples": [
+                    "brain is in overdrive",
+                    "something feels off but i cant name it",
+                    "spiraling slightly",
+                    "too many thoughts at once",
+                    "the anxiety is real tonight",
+                    "what if what if what if",
+                    "overthinking is my cardio",
+                    "why am i like this",
+                    "the dread is setting in",
+                    "nervous energy coursing through",
+                ]
+            },
+            "playful": {
+                "description": "teasing, lighthearted, witty - having fun with language and ideas",
+                "examples": [
+                    "having a laugh at the world",
+                    "jokes on jokes on jokes",
+                    "playful chaos energy",
+                    "this is funny and you know it",
+                    "teasing the internet gently",
+                    "word games and brain plays",
+                    "being silly on purpose",
+                    "laughing at our own weirdness",
+                    "the humor in the mundane",
+                    "treating life like a joke",
                 ]
             },
         }
@@ -120,22 +319,22 @@ class GeneratePostAgent(Agent):
             print("------------\n")
 
         prompt_templates = [
-            f"Write a single X/Twitter post with this vibe: {vibe} ({vibe_description}), considering it's currently {time_of_day} ({local_hour}:00) in India.\n\n"
-            "Choose a completely random, unexpected topic - could be about technology, relationships, food, space, daily life, politics, obscure hobbies, hypothetical scenarios, or something wildly offbeat\n"
+            f"Write a single X/Twitter post with a {vibe} ({vibe_description}) vibe, as if you're thinking this during {time_of_day} in India ({local_hour}:00).\n\n"
+            "The time context should shape your emotional tone and the type of thoughts you'd have, but DO NOT mention the time, hour, or any temporal references in the post itself.\n"
+            "Choose a completely random, unexpected topic - could be about technology, relationships, food, space, daily life, politics, obscure hobbies, hypothetical scenarios, or something wildly offbeat like why vending machines exist or if clouds have feelings.\n"
             "Make it feel like a genuine, unfiltered thought that just popped into your head, with a subtle hook or twist to make it engaging.\n"
             "Don't explain, don't justify, don't add context - just the raw thought.\n"
-            "Do not mention the time of day, hour, or any temporal references in the post itself.\n"
             "Make it relatable, like something anyone might think but few would post, and avoid common internet clichés.\n"
-            "Occasionally end with an ambiguous question to invite replies.\n",
-            f"Imagine you're scrolling through X at {local_hour}:00 in India during {time_of_day}. What unfiltered thought with a {vibe} ({vibe_description}) feel pops into your head?\n\n"
+            "End with something punchy or unexpected, but not a question.\n",
+            f"It's {local_hour}:00 {time_of_day} in India right now. You're in a {vibe} ({vibe_description}) headspace. What unfiltered thought would you post?\n\n"
+            "Let the time and mood inform your thinking - your energy, perspective, and the kinds of topics that feel right for this moment - but keep the actual post free of time references.\n"
             "Pick any random topic - tech, relationships, food, politics, space, daily absurdities, or bizarre hypotheticals.\n"
             "Share it raw, no explanations, just the impulsive idea that feels too real to ignore.\n"
-            "Do not reference the time or hour in the post.\n"
-            "Add a twist or question to spark curiosity, keeping it casual and human.\n",
-            f"Channel a {vibe} ({vibe_description}) mood at {local_hour}:00 {time_of_day} in India. What's the one weird thought you'd post without thinking?\n\n"
+            "End with a strong statement or observation, not a question.\n",
+            f"You're in a {vibe} ({vibe_description}) state of mind during {time_of_day} in India ({local_hour}:00). What's the one weird thought you'd post without thinking?\n\n"
+            "Use the time and mood to shape your perspective and emotional depth, but never explicitly mention time in the actual post.\n"
             "Topic could be anything from mundane daily stuff to wild political musings or sci-fi daydreams.\n"
-            "Keep it short, relatable, and ending with something that makes people pause or reply.\n"
-            "Do not include any mentions of time in the post itself.\n"
+            "Keep it short, relatable, and land with a statement or reflection - no closing questions.\n"
             "No fluff, just the core unfiltered notion.\n"
         ]
         prompt = random.choice(prompt_templates)
