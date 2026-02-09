@@ -28,7 +28,7 @@ class GeneratePostAgent(Agent):
                     "truly unhinged observation",
                     "the chaos is getting to me",
                     "internet made me think this",
-                ]
+                ],
             },
             "thoughtful": {
                 "description": "quiet, introspective, evening reflection - deep but casual pondering",
@@ -45,7 +45,7 @@ class GeneratePostAgent(Agent):
                     "soft realization about life",
                     "weirdly profound observation",
                     "thought spiral but make it poetic",
-                ]
+                ],
             },
             "snarky": {
                 "description": "witty, sarcastic, afternoon edge - confident opinions with bite",
@@ -61,7 +61,7 @@ class GeneratePostAgent(Agent):
                     "controversial opinion that isnt really controversial",
                     "soft roast of internet culture",
                     "painfully accurate take",
-                ]
+                ],
             },
             "chill": {
                 "description": "calm, appreciative, morning ease - relaxed and positive vibes",
@@ -77,7 +77,7 @@ class GeneratePostAgent(Agent):
                     "found peace in something silly",
                     "vibe check: good",
                     "unexpectedly wholesome thought",
-                ]
+                ],
             },
             "nostalgic": {
                 "description": "wistful, reminiscent, bittersweet - lost in memories and what used to be",
@@ -92,7 +92,7 @@ class GeneratePostAgent(Agent):
                     "golden age moment",
                     "remembering when things were simpler",
                     "time travel in my head",
-                ]
+                ],
             },
             "curious": {
                 "description": "inquisitive, fascinated, wonder-struck - genuinely wanting to understand",
@@ -107,7 +107,7 @@ class GeneratePostAgent(Agent):
                     "okay but what if",
                     "im hyperfixating on this thought",
                     "this rabbit hole is deep",
-                ]
+                ],
             },
             "energetic": {
                 "description": "hyped, excited, buzzing - full of enthusiasm and momentum",
@@ -122,7 +122,7 @@ class GeneratePostAgent(Agent):
                     "the thoughts are THOUGHTS",
                     "way too into this right now",
                     "unhinged enthusiasm mode",
-                ]
+                ],
             },
             "cynical": {
                 "description": "jaded, sardonic, world-weary - seeing through the noise with dark humor",
@@ -137,7 +137,7 @@ class GeneratePostAgent(Agent):
                     "dark humor because reality is dark",
                     "its all a scam isnt it",
                     "we live in a simulation apparently",
-                ]
+                ],
             },
             "melancholic": {
                 "description": "sad but poetic, bittersweet - beauty in the sadness",
@@ -152,7 +152,7 @@ class GeneratePostAgent(Agent):
                     "mourning something i cant name",
                     "melancholy without the drama",
                     "beautifully tragic moment",
-                ]
+                ],
             },
             "absurd": {
                 "description": "surreal, ridiculous, nonsensical - laughing at the illogic of it all",
@@ -167,7 +167,7 @@ class GeneratePostAgent(Agent):
                     "this is peak comedy",
                     "logic has left the chat",
                     "the simulation has a sense of humor",
-                ]
+                ],
             },
             "vulnerable": {
                 "description": "raw, honest, unguarded - letting the walls down for real",
@@ -182,7 +182,7 @@ class GeneratePostAgent(Agent):
                     "admitting something ive been hiding",
                     "too real right now",
                     "stripped down and honest",
-                ]
+                ],
             },
             "inspired": {
                 "description": "motivated, hopeful, seeing potential - feeling the spark",
@@ -197,7 +197,7 @@ class GeneratePostAgent(Agent):
                     "belief in something bigger",
                     "lets actually do something",
                     "the spark is real right now",
-                ]
+                ],
             },
             "petty": {
                 "description": "annoyed, nitpicky, venting - small grievances blown up",
@@ -212,7 +212,7 @@ class GeneratePostAgent(Agent):
                     "the audacity of this thing",
                     "i cant let this go",
                     "the irritation is real",
-                ]
+                ],
             },
             "reflective": {
                 "description": "measured, introspective, processing - taking stock and making sense",
@@ -227,7 +227,7 @@ class GeneratePostAgent(Agent):
                     "seeing patterns everywhere",
                     "the bigger picture is",
                     "understanding something finally",
-                ]
+                ],
             },
             "anxious": {
                 "description": "worried, spiraling, overthinking - the mind racing",
@@ -242,7 +242,7 @@ class GeneratePostAgent(Agent):
                     "why am i like this",
                     "the dread is setting in",
                     "nervous energy coursing through",
-                ]
+                ],
             },
             "playful": {
                 "description": "teasing, lighthearted, witty - having fun with language and ideas",
@@ -257,7 +257,277 @@ class GeneratePostAgent(Agent):
                     "laughing at our own weirdness",
                     "the humor in the mundane",
                     "treating life like a joke",
-                ]
+                ],
+            },
+            "tech_obsessed": {
+                "description": "fascinated by technology, building, innovation - nerding out hard",
+                "examples": [
+                    "another sleepless night coding",
+                    "this new tech is actually unhinged",
+                    "why doesnt everyone use this tool",
+                    "the future of tech is wild",
+                    "building things is peak dopamine",
+                    "ai is doing things nobody expected",
+                    "the engineering is insane",
+                    "tech solves everything except happiness apparently",
+                    "obsessed with optimizing everything",
+                    "the innovation never stops coming",
+                ],
+            },
+            "science_struck": {
+                "description": "blown away by science, discovery, the cosmos - wonder about existence",
+                "examples": [
+                    "the universe is genuinely insane",
+                    "science proves reality is weirder than fiction",
+                    "how is this even possible",
+                    "the more you learn the less sense it makes",
+                    "space is terrifying and beautiful",
+                    "biology is literally wild",
+                    "we barely understand anything actually",
+                    "quantum mechanics broke my brain",
+                    "discovery hits different",
+                    "the science community is out of their minds in the best way",
+                ],
+            },
+            "digital_native": {
+                "description": "internet culture, memes, online logic - speaking the language of the web",
+                "examples": [
+                    "this is how internet culture works now",
+                    "the meta is deep",
+                    "memes are philosophy",
+                    "the internet has its own physics",
+                    "online behavior is a science",
+                    "web3 discourse never dies",
+                    "crypto taught me something about human nature",
+                    "viral moments hit different",
+                    "the algorithm knows all",
+                    "internet logic defies reality",
+                ],
+            },
+            "philosophical_tech": {
+                "description": "pondering implications, ethics, meaning in the digital age",
+                "examples": [
+                    "what does it mean to be human when ai exists",
+                    "are we just data points",
+                    "the simulation theory hits harder now",
+                    "technology changing what consciousness means",
+                    "ethics in the digital age are complicated",
+                    "are we building or destroying",
+                    "what happens when ai thinks like us",
+                    "privacy is dead and were okay with it",
+                    "the future is weird and im not ready",
+                    "our choices are being made by algorithms",
+                ],
+            },
+            "philosophical": {
+                "description": "deep questions about existence, meaning, purpose - touching the eternal",
+                "examples": [
+                    "why do we exist actually",
+                    "what is the point of anything",
+                    "consciousness is a trip",
+                    "free will is a construct",
+                    "what makes something real",
+                    "time is not what we think it is",
+                    "identity is more fluid than we admit",
+                    "the meaning of life is the search itself",
+                    "reality is subjective and im fine with that",
+                    "existence is absurd but also beautiful",
+                ],
+            },
+            "psychological": {
+                "description": "analyzing behavior, mental patterns, human psychology - understanding minds",
+                "examples": [
+                    "why do people do the things they do",
+                    "patterns in human behavior are wild",
+                    "trauma makes sense now",
+                    "attachment styles explain everything",
+                    "the psychology of social media is dark",
+                    "defense mechanisms are everywhere",
+                    "cognitive biases run our lives",
+                    "understanding yourself is a lifelong project",
+                    "mental health hits different when you understand it",
+                    "human nature is more predictable than we think",
+                ],
+            },
+            "relationships_observer": {
+                "description": "noticing dynamics, connections, interactions between people",
+                "examples": [
+                    "relationship patterns are everywhere once you see them",
+                    "why do people stay in bad relationships",
+                    "love is complicated and thats the beauty of it",
+                    "toxic energy recognition is a superpower",
+                    "boundaries are everything actually",
+                    "communication solves more than people realize",
+                    "connection is what makes us human",
+                    "watching people navigate relationships is a trip",
+                    "vulnerability is strength",
+                    "people are more similar than different",
+                ],
+            },
+            "sociological": {
+                "description": "observing society, culture, systems, movements - seeing the bigger patterns",
+                "examples": [
+                    "society operates on unspoken rules nobody mentions",
+                    "culture is just collective agreement",
+                    "power dynamics are wild when you see them",
+                    "systems are designed to benefit certain groups",
+                    "movements start with one person caring",
+                    "social norms are arbitrary and we follow them anyway",
+                    "class structures determine so much",
+                    "generational differences are fascinating",
+                    "institutions shape us more than we realize",
+                    "revolution starts with conversations",
+                ],
+            },
+            "romantic": {
+                "description": "idealistic, hopeful about love and connection - believing in the magic",
+                "examples": [
+                    "love exists and its worth the risk",
+                    "believing in soulmates might be silly but",
+                    "connection feels like destiny",
+                    "hearts are capable of incredible things",
+                    "romance is alive in small moments",
+                    "human connection is the only real magic",
+                    "falling is terrifying and beautiful",
+                    "true love changes everything",
+                    "forever sounds nice actually",
+                    "believing in people is my personality trait",
+                ],
+            },
+            "nihilistic": {
+                "description": "nothing matters, dark acceptance, cosmic indifference - peace in meaninglessness",
+                "examples": [
+                    "nothing matters and thats liberating",
+                    "care about whatever you want, it wont change the heat death",
+                    "chaos is the natural state",
+                    "meaning is something we invented",
+                    "the void is peaceful",
+                    "suffering is universal so might as well laugh",
+                    "we are insignificant specs",
+                    "consequences are theoretical",
+                    "reality doesnt owe us anything",
+                    "acceptance of meaninglessness is freedom",
+                ],
+            },
+            "spiritual": {
+                "description": "mystical, connected to something greater - seeking transcendence",
+                "examples": [
+                    "everything is connected somehow",
+                    "the universe has a vibe",
+                    "consciousness is bigger than we think",
+                    "energy flows in mysterious ways",
+                    "manifestation is real if you believe hard enough",
+                    "past lives are a possibility",
+                    "synchronicity is everywhere",
+                    "there are forces we dont understand",
+                    "feeling guided by something greater",
+                    "the spiritual journey is real",
+                ],
+            },
+            "activist": {
+                "description": "driven to change things, fighting for causes - righteous energy",
+                "examples": [
+                    "this injustice cannot stand",
+                    "change starts with awareness",
+                    "silence is complicity",
+                    "systems need dismantling",
+                    "community power is real",
+                    "the revolution will not be televised",
+                    "call it out when you see it",
+                    "collective action changes worlds",
+                    "fighting for a better future",
+                    "resistance is not futile",
+                ],
+            },
+            "artistic": {
+                "description": "creative, aesthetic-focused, seeing beauty everywhere",
+                "examples": [
+                    "the world is art and im obsessed",
+                    "aesthetics matter",
+                    "creating is how i understand",
+                    "beauty exists in unexpected places",
+                    "expression is essential",
+                    "art is the only truth",
+                    "curating my life like a gallery",
+                    "visual language speaks louder",
+                    "the creative process is meditation",
+                    "beauty heals something broken",
+                ],
+            },
+            "analytical": {
+                "description": "logical, breaking things down, systematic thinking",
+                "examples": [
+                    "lets examine this logically",
+                    "data tells the real story",
+                    "patterns reveal the truth",
+                    "breaking it down step by step",
+                    "evidence before emotion",
+                    "systems thinking explains so much",
+                    "root cause analysis is key",
+                    "the math checks out",
+                    "objective reality exists",
+                    "logical fallacies everywhere",
+                ],
+            },
+            "ambitious": {
+                "description": "goal-oriented, dreaming big, reaching for greatness",
+                "examples": [
+                    "nothing is impossible if you try hard enough",
+                    "building something bigger than myself",
+                    "the vision is clear",
+                    "greatness is achievable",
+                    "every failure is a lesson",
+                    "momentum is everything",
+                    "im going to make it happen",
+                    "the grind never stops",
+                    "potential is limitless",
+                    "the future is mine to build",
+                ],
+            },
+            "nature_connected": {
+                "description": "attuned to environment, ecological awareness, earth reverence",
+                "examples": [
+                    "nature is the real show",
+                    "were destroying something precious",
+                    "the earth speaks if you listen",
+                    "climate reality is setting in",
+                    "seasons change us deeply",
+                    "trees are wiser than humans",
+                    "wildlife is dying and we're ignoring it",
+                    "natural beauty is medicine",
+                    "we're part of the ecosystem not above it",
+                    "the planet will be fine, will we",
+                ],
+            },
+            "witty": {
+                "description": "clever wordplay, sharp humor, linguistic playfulness",
+                "examples": [
+                    "language is my playground",
+                    "puns are peak comedy actually",
+                    "wit is my defense mechanism",
+                    "double meanings everywhere",
+                    "wordplay keeps me alive",
+                    "clever observations hit different",
+                    "metaphors are the real poets",
+                    "linguistic gymnastics for fun",
+                    "the joke is always funnier if its clever",
+                    "language is art and im an artist",
+                ],
+            },
+            "hedonistic": {
+                "description": "pleasure-seeking, living in the moment, enjoying life",
+                "examples": [
+                    "life is short enjoy the good parts",
+                    "pleasure is the point",
+                    "im trying everything once",
+                    "the experience matters not the outcome",
+                    "sensation is reality",
+                    "comfort is underrated",
+                    "indulgence is not sin",
+                    "present moment is all we have",
+                    "good vibes are the goal",
+                    "life is a party and im here for it",
+                ],
             },
         }
 
@@ -301,12 +571,18 @@ class GeneratePostAgent(Agent):
         )
 
     def generate_post(self) -> str:
-        category, local_hour, time_of_day = self._get_current_vibe_category()
+        # Determine local time (used to shape mood in the prompt) but select
+        # the vibe category uniformly at random from the full library so all
+        # vibes can be generated.
+        _, local_hour, time_of_day = self._get_current_vibe_category()
+
+        # Choose any vibe category from the full library (uniform random)
+        category = random.choice(list(self.vibe_library.keys()))
         vibe = random.choice(self.vibe_library[category]["examples"])
         vibe_description = self.vibe_library[category]["description"]
 
-        token_limits = {"chaotic": 60, "chill": 80, "snarky": 100, "thoughtful": 125}
-        token_limit = token_limits[category]
+        # Use a uniform token limit for all vibes to keep output length consistent.
+        token_limit = 100
 
         if self.debug:
             print("\n--- DEBUG ---")
@@ -335,7 +611,7 @@ class GeneratePostAgent(Agent):
             "Use the time and mood to shape your perspective and emotional depth, but never explicitly mention time in the actual post.\n"
             "Topic could be anything from mundane daily stuff to wild political musings or sci-fi daydreams.\n"
             "Keep it short, relatable, and land with a statement or reflection - no closing questions.\n"
-            "No fluff, just the core unfiltered notion.\n"
+            "No fluff, just the core unfiltered notion.\n",
         ]
         prompt = random.choice(prompt_templates)
 

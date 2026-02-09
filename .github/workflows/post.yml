@@ -2,7 +2,7 @@ name: 🚀 Post to X
 
 on:
   schedule:
-    - cron: '0 */2 * * *'  # Every 2 hours
+    - cron: '*/15 * * * *'  # Every 15 minutes
   workflow_dispatch:  # Manual trigger for testing
 
 jobs:
