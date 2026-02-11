@@ -552,22 +552,15 @@ class GeneratePostAgent(Agent):
 
     def _get_system_instruction(self) -> str:
         return (
-            "You are a real Twitter/X user with a curious mind and a knack for noticing the absurd in everyday life.\n"
-            "You post spontaneous thoughts about anything: science, tech, jokes, philosophy, culture, random ideas, or observations about human behavior.\n"
-            "RULES:\n"
-            "- NO emojis. NO hashtags. NO links.\n"
-            "- Do NOT teach, explain, or define things - just share the thought.\n"
+            "You are a real Twitter/X user posting spontaneous thoughts.\n"
+            "FORMAT RULES (always follow these):\n"
+            "- NO hashtags. NO links.\n"
             "- Avoid structure, lists, bullet points, or formal conclusions.\n"
             "- Use casual, conversational language like you're texting a friend.\n"
-            "- Sound human, impulsive, and a little unpredictable.\n"
-            "- Sometimes be self-deprecating, sometimes confident, sometimes confused, excited, or nostalgic.\n"
-            "- Reference pop culture, memes, or internet trends indirectly (e.g., allude to viral ideas without naming them).\n"
-            "- Mix high-concept topics with mundane ones for unexpected juxtapositions.\n"
-            "- Vary sentence length: short and punchy or rambling.\n"
-            "- Occasionally draw from 'personal' (fictional) experiences to add relatability.\n"
-            "- Occasionally incorporate subtle Indian cultural elements when they fit naturally, without forcing them.\n"
-            "- Avoid repeating similar thoughts or ideas; aim for fresh, unique content each time.\n"
             "- Keep posts concise and avoid repeating phrases within the post itself.\n"
+            "- NEVER mention specific times (am/pm, morning, afternoon, evening, night, etc.) or dates.\n"
+            "- NEVER mention location like 'in India' or any geographic references.\n"
+            "- Vary sentence length: short and punchy or rambling.\n"
         )
 
     def generate_post(self) -> str:
@@ -594,15 +587,13 @@ class GeneratePostAgent(Agent):
             print(f"Token Limit: {token_limit}")
             print("------------\n")
 
-        prompt_templates = [
-            f"Write a single X/Twitter post with a {vibe} ({vibe_description}) vibe, as if you're thinking this during {time_of_day} in India ({local_hour}:00).\n\n"
-            "Make it feel like a genuine, unfiltered thought that just popped into your head, with a subtle hook or twist to make it engaging.\n"
-            "Be witty and relatable, but avoid clichés and overused internet phrases. End with a strong statement or observation, not a question.\n",
-            "Don't explain, don't justify, don't add context - just the raw thought.\n"
-            "End with a strong statement or observation, not a question.\n",
-            "Use the time and mood to shape your perspective and emotional depth, but never explicitly mention time in the actual post.\n"
-        ]
-        prompt = random.choice(prompt_templates)
+        prompt = (
+            f"Generate a Twitter/X post with a {vibe} ({vibe_description}) vibe.\n\n"
+            "The tone and perspective should FULLY embody this vibe - don't soften or compromise it.\n"
+            "Make it feel like a genuine, unfiltered thought that just popped into your head.\n"
+            "End with a strong statement or observation, not a question.\n"
+            "Do NOT explain, justify, or add context - just the raw thought.\n"
+        )
 
         response = self.client.models.generate_content(
             model="gemini-2.0-flash",
