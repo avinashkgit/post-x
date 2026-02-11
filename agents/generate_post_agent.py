@@ -596,22 +596,11 @@ class GeneratePostAgent(Agent):
 
         prompt_templates = [
             f"Write a single X/Twitter post with a {vibe} ({vibe_description}) vibe, as if you're thinking this during {time_of_day} in India ({local_hour}:00).\n\n"
-            "The time context should shape your emotional tone and the type of thoughts you'd have, but DO NOT mention the time, hour, or any temporal references in the post itself.\n"
-            "Choose a completely random, unexpected topic - could be about technology, relationships, food, space, daily life, politics, obscure hobbies, hypothetical scenarios, or something wildly offbeat like why vending machines exist or if clouds have feelings.\n"
             "Make it feel like a genuine, unfiltered thought that just popped into your head, with a subtle hook or twist to make it engaging.\n"
+            "Be witty and relatable, but avoid clichés and overused internet phrases. End with a strong statement or observation, not a question.\n",
             "Don't explain, don't justify, don't add context - just the raw thought.\n"
-            "Make it relatable, like something anyone might think but few would post, and avoid common internet clichés.\n"
-            "End with something punchy or unexpected, but not a question.\n",
-            f"It's {local_hour}:00 {time_of_day} in India right now. You're in a {vibe} ({vibe_description}) headspace. What unfiltered thought would you post?\n\n"
-            "Let the time and mood inform your thinking - your energy, perspective, and the kinds of topics that feel right for this moment - but keep the actual post free of time references.\n"
-            "Pick any random topic - tech, relationships, food, politics, space, daily absurdities, or bizarre hypotheticals.\n"
-            "Share it raw, no explanations, just the impulsive idea that feels too real to ignore.\n"
             "End with a strong statement or observation, not a question.\n",
-            f"You're in a {vibe} ({vibe_description}) state of mind during {time_of_day} in India ({local_hour}:00). What's the one weird thought you'd post without thinking?\n\n"
             "Use the time and mood to shape your perspective and emotional depth, but never explicitly mention time in the actual post.\n"
-            "Topic could be anything from mundane daily stuff to wild political musings or sci-fi daydreams.\n"
-            "Keep it short, relatable, and land with a statement or reflection - no closing questions.\n"
-            "No fluff, just the core unfiltered notion.\n",
         ]
         prompt = random.choice(prompt_templates)
 
