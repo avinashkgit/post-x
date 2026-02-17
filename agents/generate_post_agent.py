@@ -531,24 +531,24 @@ class GeneratePostAgent(Agent):
             },
         }
 
-    def _get_current_vibe_category(self):
-        """Determine vibe category and time of day based on India time (Asia/Kolkata)."""
+    def _get_time_period(self) -> tuple[str, int, str]:
+        """Get current time info for awareness (not for filtering). India time (Asia/Kolkata)."""
         local_hour = datetime.now(ZoneInfo("Asia/Kolkata")).hour
 
         if 0 <= local_hour < 6:
-            category = "chaotic"
+            time_period = "late_night"
             time_of_day = "late night"
         elif 6 <= local_hour < 12:
-            category = "chill"
+            time_period = "morning"
             time_of_day = "morning"
         elif 12 <= local_hour < 18:
-            category = "snarky"
+            time_period = "afternoon"
             time_of_day = "afternoon"
         else:
-            category = "thoughtful"
+            time_period = "evening"
             time_of_day = "evening"
 
-        return category, local_hour, time_of_day
+        return time_period, local_hour, time_of_day
 
     def _get_system_instruction(self) -> str:
         return (
@@ -564,12 +564,10 @@ class GeneratePostAgent(Agent):
         )
 
     def generate_post(self) -> str:
-        # Determine local time (used to shape mood in the prompt) but select
-        # the vibe category uniformly at random from the full library so all
-        # vibes can be generated.
-        _, local_hour, time_of_day = self._get_current_vibe_category()
+        # Get time info for awareness (not for filtering vibes)
+        time_period, local_hour, time_of_day = self._get_time_period()
 
-        # Choose any vibe category from the full library (uniform random)
+        # Select vibe uniformly at random from all 44 vibes
         category = random.choice(list(self.vibe_library.keys()))
         vibe = random.choice(self.vibe_library[category]["examples"])
         vibe_description = self.vibe_library[category]["description"]
